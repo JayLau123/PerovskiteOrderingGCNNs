@@ -7,6 +7,14 @@
 
 Repo for our paper "Learning Ordering in Crystalline Materials with Symmetry-Aware Graph Neural Networks" ([preprint on arXiv](https://arxiv.org/abs/2409.13851)).
 
+## ⚠️ Important Update: Migration to Weights & Biases
+
+This repository has been updated to use **Weights & Biases (wandb)** instead of SigOpt for hyperparameter optimization and experiment tracking. This provides better visualization, real-time monitoring, and improved collaboration features.
+
+**For migration instructions, see:** [`MIGRATION_GUIDE_SIGOPT_TO_WANDB.md`](MIGRATION_GUIDE_SIGOPT_TO_WANDB.md)
+
+**New training notebook:** [`1_model_training_wandb.ipynb`](1_model_training_wandb.ipynb)
+
 ## Setup
 
 To start, clone this repo and all its submodules to your local directory or a workstation:
@@ -51,8 +59,7 @@ torchvision       0.14.1
 torchaudio        0.13.1
 pyg               2.3.0
 e3nn              0.5.1
-sigopt            8.8.2
-sigoptlite        0.1.2
+wandb             0.16.3
 gdown             4.7.1
 mscorefonts       0.0.1
 boken             3.3.4
@@ -69,9 +76,32 @@ conda activate Perovskite_ML_Environment
 
 All our data and trained models are archived on Zenodo ([DOI: 10.5281/zenodo.13820311](https://doi.org/10.5281/zenodo.13820311)) and Materials Data Facility ([DOI: 10.18126/ncqt-rh18](https://doi.org/10.18126/ncqt-rh18)). Please place all data and model files in the corresponding directories and then refer to the following Jupyter notebooks to reproduce the results of our paper:
 
-- [1_model_training.ipynb](1_model_training.ipynb): This notebook provides examples of how to train GCNNs on the training dataset and conduct hyperparameter optimization based on the loss on the validation set.
+- [1_model_training_wandb.ipynb](1_model_training_wandb.ipynb): This notebook provides examples of how to train GCNNs on the training dataset and conduct hyperparameter optimization using Weights & Biases (wandb).
 - [2_model_inference.ipynb](2_model_inference.ipynb): This notebook provides examples of how to verify the performance of GCNNs on the validation set, select the top-performing models accordingly, compute the prediction on the test and holdout sets, and extract the latent embeddings of CGCNN and e3nn after all message passing and graph convolution layers.
 - [3_model_analysis.ipynb](3_model_analysis.ipynb): This notebook provides examples of how to reproduce all major figures in this manuscript.
+
+### Quick Start with wandb
+
+1. **Install and login to wandb:**
+   ```bash
+   pip install wandb
+   wandb login
+   ```
+
+2. **Run hyperparameter optimization:**
+   ```python
+   from training.run_wandb_experiment import run_wandb_experiment
+   
+   run_wandb_experiment(
+       struct_type="unrelaxed",
+       model_type="CGCNN",
+       gpu_num=0,
+       obs_budget=50,
+       project_name="my_perovskite_project"
+   )
+   ```
+
+3. **Monitor progress** at [wandb.ai](https://wandb.ai)
 
 ## Citation
 

@@ -1,0 +1,217 @@
+{
+    "os": "Linux-6.8.0-62-generic-x86_64-with-glibc2.39",
+    "python": "3.10.11",
+    "heartbeatAt": "2025-06-21T19:34:52.905998",
+    "startedAt": "2025-06-21T19:34:52.485056",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--model_type",
+        "CGCNN",
+        "--struct_type",
+        "unrelaxed",
+        "--gpu_num",
+        "0",
+        "--obs_budget",
+        "5"
+    ],
+    "state": "running",
+    "program": "/data/users/kritarth/PerovskiteOrderingGCNNs/train_with_wandb.py",
+    "codePathLocal": "train_with_wandb.py",
+    "codePath": "train_with_wandb.py",
+    "git": {
+        "remote": "https://github.com/jiayu-peng-lab/PerovskiteOrderingGCNNs.git",
+        "commit": "422aeea3a5dbe73f8cbc3b500069c801d71dc9a0"
+    },
+    "email": null,
+    "root": "/data/users/kritarth/PerovskiteOrderingGCNNs",
+    "host": "boltzmann.eng.buffalo.edu",
+    "username": "kritarth",
+    "executable": "/data/users/kritarth/.conda/envs/Perovskite_ML_Environment/bin/python",
+    "cpu_count": 24,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 0.9204687500000004,
+        "min": 800.0,
+        "max": 5087.5
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 0.801,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.94,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 2.146,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 1.4,
+            "min": 800.0,
+            "max": 6000.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 6000.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 6000.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 6000.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 5700.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.799,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.803,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.801,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.796,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        },
+        {
+            "current": 0.8,
+            "min": 800.0,
+            "max": 4400.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 62.44486618041992,
+            "used": 11.150459289550781
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 4090",
+            "memory_total": 25757220864
+        }
+    ],
+    "memory": {
+        "total": 62.48480224609375
+    }
+}
