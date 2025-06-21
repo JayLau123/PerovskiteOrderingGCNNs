@@ -15,7 +15,7 @@ from training.loss import contrastive_loss
 from training.sigopt_utils import build_sigopt_name
 from processing.create_model.create_model import create_model
 
-saved_models_path = "/home/jypeng/publication_repos/PerovskiteOrderingGCNNs/saved_models/"
+saved_models_path = "./saved_models/"
 
 def get_experiment_id(model_params, target_prop):
 
@@ -139,7 +139,7 @@ def reverify_sigopt_models(model_params, gpu_num, target_prop="dft_e_hull"):
     sigopt_name = build_sigopt_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"],long_range=model_params["long_range"])
     exp_id = get_experiment_id(model_params, target_prop)
     parent_directory = saved_models_path + model_params["model_type"] + "/"+ sigopt_name + "/" +str(exp_id)
-    num_folders = len([i for i in os.listdir(parent_directory) if os.path.isdir(parent_directory + "/" + i)])
+    num_folders = len([i for i in os.listdir(parent_directory) if os.path.isdir(parent_directory + "/" + i)])- 1
 
     for folder_idx in range(num_folders):        
         job_idx = num_folders - folder_idx - 1
