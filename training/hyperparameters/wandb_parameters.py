@@ -1,12 +1,58 @@
-def get_cgcnn_sweep_config():
+# Original SigOpt functions (commented out for reference)
+# def get_cgcnn_hyperparameter_range():
+#     parameters=[
+#         # dict(name='MaxEpochs', bounds=dict(min=100, max=100), type="int"), 
+#         dict(name="batch_size", bounds=dict(min=4, max=16), type="int"),
+#         dict(name="log_lr", bounds=dict(min=-5, max=-2), type="int"), 
+#         dict(name="reduceLR_patience", bounds=dict(min=10, max=30), type="int"),
+#         dict(name="atom_fea_len", bounds=dict(min=32, max=256), type="int"), 
+#         dict(name="n_conv", bounds=dict(min=2, max=5), type="int"), 
+#         dict(name="h_fea_len", bounds=dict(min=32, max=256), type="int"), 
+#         dict(name="n_h", bounds=dict(min=1, max=4), type="int")
+#     ]
+#     return parameters
+
+# def get_painn_hyperparameter_range():
+#     parameters=[
+#         # dict(name='MaxEpochs', bounds=dict(min=100, max=100), type="int"), 
+#         dict(name="batch_size", bounds=dict(min=4, max=16), type="int"),
+#         dict(name="log_lr", bounds=dict(min=-5, max=-3), type="int"), 
+#         dict(name="reduceLR_patience", bounds=dict(min=10, max=30), type="int"), 
+#         dict(name="log2_feat_dim", bounds=dict(min=5, max=9), type="int"), 
+#         dict(name="activation", categorical_values=["swish", "learnable_swish", "ReLU", "LeakyReLU"], type="categorical"),
+#         dict(name="num_conv", bounds=dict(min=1, max=6), type="int"), 
+#      ]
+#     return parameters
+
+# def get_e3nn_hyperparameter_range():
+#     parameters=[
+#         # dict(name='MaxEpochs', bounds=dict(min=100, max=100), type="int"), 
+#         dict(name="batch_size", bounds=dict(min=4, max=12), type="int"),
+#         dict(name="log_lr", bounds=dict(min=-5, max=-2), type="int"), 
+#         dict(name="reduceLR_patience", bounds=dict(min=10, max=30), type="int"), 
+#         dict(name="len_embedding_feature_vector", grid=[32, 64, 128], type="int"),
+#         dict(name="num_hidden_feature", grid=[32, 64, 128], type="int"), 
+#         dict(name="num_hidden_layer", bounds=dict(min=0, max=2), type="int"), 
+#         dict(name="multiplicity_irreps", grid=[16, 32, 64], type="int"),
+#         dict(name="num_conv", bounds=dict(min=1, max=4), type="int"), 
+#         dict(name="num_radical_basis", grid=[5, 10, 20], type="int"),
+#         dict(name="num_radial_neurons", grid=[32, 64, 128], type="int"), 
+#     ]
+#     return parameters
+
+# Wandb equivalents (active)
+def get_cgcnn_hyperparameter_range():
     """Get wandb sweep configuration for CGCNN model"""
     sweep_config = {
-        'method': 'bayes',  # Bayesian optimization
+        'method': 'bayes',  # Bayesian optimization (equivalent to SigOpt's default)
         'metric': {
             'name': 'val_mae',
             'goal': 'minimize'
         },
         'parameters': {
+            'MaxEpochs': {
+                'value': 100
+            },
             'batch_size': {
                 'values': [4, 8, 12, 16]
             },
@@ -45,7 +91,7 @@ def get_cgcnn_sweep_config():
     return sweep_config
 
 
-def get_painn_sweep_config():
+def get_painn_hyperparameter_range():
     """Get wandb sweep configuration for Painn model"""
     sweep_config = {
         'method': 'bayes',  # Bayesian optimization
@@ -54,6 +100,9 @@ def get_painn_sweep_config():
             'goal': 'minimize'
         },
         'parameters': {
+            'MaxEpochs': {
+                'value': 100
+            },
             'batch_size': {
                 'values': [4, 8, 12, 16]
             },
@@ -85,7 +134,7 @@ def get_painn_sweep_config():
     return sweep_config
 
 
-def get_e3nn_sweep_config():
+def get_e3nn_hyperparameter_range():
     """Get wandb sweep configuration for e3nn model"""
     sweep_config = {
         'method': 'bayes',  # Bayesian optimization
@@ -94,6 +143,9 @@ def get_e3nn_sweep_config():
             'goal': 'minimize'
         },
         'parameters': {
+            'MaxEpochs': {
+                'value': 100
+            },
             'batch_size': {
                 'values': [4, 6, 8, 10, 12]
             },
@@ -137,28 +189,16 @@ def get_e3nn_sweep_config():
     return sweep_config
 
 
-def get_sweep_config(model_type):
-    """Get sweep configuration based on model type"""
-    if model_type == "Painn":
-        return get_painn_sweep_config()
-    elif model_type == "CGCNN":
-        return get_cgcnn_sweep_config()
-    elif model_type == "e3nn":
-        return get_e3nn_sweep_config()
-    else:
-        raise ValueError(f"Unknown model type: {model_type}")
-
-
 def convert_hyperparameters(hyperparameters):
     """Convert wandb hyperparameters to the format expected by the training code"""
-    # Convert log_lr to actual learning rate
+    # Convert log_lr to actual learning rate but keep both
     if 'log_lr' in hyperparameters:
         hyperparameters['lr'] = 10 ** hyperparameters['log_lr']
-        del hyperparameters['log_lr']
+        # Keep log_lr as well since trainer expects it
     
     # Convert log2_feat_dim to feat_dim for Painn
     if 'log2_feat_dim' in hyperparameters:
         hyperparameters['feat_dim'] = 2 ** hyperparameters['log2_feat_dim']
-        del hyperparameters['log2_feat_dim']
+        # Keep log2_feat_dim as well since trainer expects it
     
     return hyperparameters 

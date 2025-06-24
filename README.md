@@ -7,111 +7,191 @@
 
 Repo for our paper "Learning Ordering in Crystalline Materials with Symmetry-Aware Graph Neural Networks" ([preprint on arXiv](https://arxiv.org/abs/2409.13851)).
 
-## ⚠️ Important Update: Migration to Weights & Biases
+---
 
-This repository has been updated to use **Weights & Biases (wandb)** instead of SigOpt for hyperparameter optimization and experiment tracking. This provides better visualization, real-time monitoring, and improved collaboration features.
+## 🚀 Quick Start
 
-**For migration instructions, see:** [`MIGRATION_GUIDE_SIGOPT_TO_WANDB.md`](MIGRATION_GUIDE_SIGOPT_TO_WANDB.md)
-
-**New training notebook:** [`1_model_training_wandb.ipynb`](1_model_training_wandb.ipynb)
-
-## Setup
-
-To start, clone this repo and all its submodules to your local directory or a workstation:
-
-```
+### 1. Clone the repository (with submodules)
+```bash
 git clone --recurse-submodules git@github.com:learningmatter-mit/PerovskiteOrderingGCNNs.git
-```
-
-or
-
-```
-git clone git@github.com:learningmatter-mit/PerovskiteOrderingGCNNs.git
 cd PerovskiteOrderingGCNNs
 git submodule update --init
 ```
 
-Our codes are built upon previous implementations of [CGCNN](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_cgcnn/tree/af4c0bf6606da1b46887ed8c29521d199d5e2798), [e3nn](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_e3nn/tree/408b90e922a2a9c7bae2ad95433aae97d1a58494), and [PaiNN](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_painn/tree/e7980a52af4936addc5fb03dbc50d4fc74fe98fc), which are included as submodules in this repo. If there are any changes in their corresponding GitHub repos, the following command will update the submodules in this repo:
-
-```
-git submodule update --remote --merge
-```
-
-This repository requires the following packages to run correctly:
-
-```
-pandas            1.5.3
-scipy             1.10.1
-numpy             1.24.3
-scikit-learn      1.2.2
-matplotlib        3.7.1
-seaborn           0.12.2
-pymatgen          2023.5.10
-ase               3.22.1
-rdkit             2023.3.1
-e3fp              1.2.5
-pytorch           1.13.1
-pytorch-cuda      11.7
-pytorch-sparse    0.6.17
-pytorch-scatter   2.1.1
-pytorch-cluster   1.6.1
-torchvision       0.14.1
-torchaudio        0.13.1
-pyg               2.3.0
-e3nn              0.5.1
-wandb             0.16.3
-gdown             4.7.1
-mscorefonts       0.0.1
-boken             3.3.4
-```
-
-All these packages can be installed using the [environment.yml](environment.yml) file and `conda`:
-
-```
+### 2. Set up the environment
+Install all dependencies using conda:
+```bash
 conda env create -f environment.yml
 conda activate Perovskite_ML_Environment
 ```
 
-## Usage
+### 3. Prepare data
+Download data and pre-trained models from [Zenodo](https://doi.org/10.5281/zenodo.13820311) or [Materials Data Facility](https://doi.org/10.18126/ncqt-rh18) and place them in the appropriate directories (`data/`, `best_models/`, etc.).
 
-All our data and trained models are archived on Zenodo ([DOI: 10.5281/zenodo.13820311](https://doi.org/10.5281/zenodo.13820311)) and Materials Data Facility ([DOI: 10.18126/ncqt-rh18](https://doi.org/10.18126/ncqt-rh18)). Please place all data and model files in the corresponding directories and then refer to the following Jupyter notebooks to reproduce the results of our paper:
+---
 
-- [1_model_training_wandb.ipynb](1_model_training_wandb.ipynb): This notebook provides examples of how to train GCNNs on the training dataset and conduct hyperparameter optimization using Weights & Biases (wandb).
-- [2_model_inference.ipynb](2_model_inference.ipynb): This notebook provides examples of how to verify the performance of GCNNs on the validation set, select the top-performing models accordingly, compute the prediction on the test and holdout sets, and extract the latent embeddings of CGCNN and e3nn after all message passing and graph convolution layers.
-- [3_model_analysis.ipynb](3_model_analysis.ipynb): This notebook provides examples of how to reproduce all major figures in this manuscript.
-
-### Quick Start with wandb
-
-1. **Install and login to wandb:**
-   ```bash
-   pip install wandb
-   wandb login
-   ```
-
-2. **Run hyperparameter optimization:**
-   ```python
-   from training.run_wandb_experiment import run_wandb_experiment
-   
-   run_wandb_experiment(
-       struct_type="unrelaxed",
-       model_type="CGCNN",
-       gpu_num=0,
-       obs_budget=50,
-       project_name="my_perovskite_project"
-   )
-   ```
-
-3. **Monitor progress** at [wandb.ai](https://wandb.ai)
-
-## Citation
-
-If you use our codes, data, and/or models, please cite the following paper:
+## 🗂️ Directory Structure (Updated)
 
 ```
+/ (root)
+│   README.md
+│   LICENSE
+│   .gitignore
+│   .gitmodules
+│
+├── notebooks/
+│     1_model_training.ipynb
+│     2_model_inference.ipynb
+│     3_model_analysis.ipynb
+│
+├── src/
+│     1_model_training.py
+│     2_model_inference.py
+│     3_model_analysis.py
+│     train_with_wandb.py
+│
+├── scripts/
+│     train.py
+│     infer.py
+│     analyze.py
+│     ...
+│
+├── docker/
+│     Dockerfile
+│     docker-compose.yml
+│
+├── config/
+│     environment.yml
+│
+├── docs/
+│     MIGRATION_GUIDE_SIGOPT_TO_WANDB.md
+│
+├── models/
+├── data/
+├── figures/
+├── inference/
+├── processing/
+├── training/
+├── wandb/
+├── best_models/
+├── saved_models/
+```
+
+- All code scripts are now in `/src/`.
+- All Jupyter notebooks are in `/notebooks/`.
+- Docker-related files are in `/docker/`.
+- Environment and config files are in `/config/`.
+- Documentation and guides are in `/docs/`.
+- The `scripts/`, `models/`, `data/`, `figures/`, `inference/`, `processing/`, `training/`, `wandb/`, `best_models/`, and `saved_models/` directories remain as they are.
+
+---
+
+## 🏃 Usage (Updated)
+
+### Training
+Train a model with hyperparameter optimization:
+```bash
+python scripts/train.py --model_type CGCNN --struct_type unrelaxed --gpu_num 0 --obs_budget 10 --training_fraction 1.0 --training_seed 0
+```
+
+### Inference & Embedding Extraction
+```bash
+python scripts/infer.py --model_type CGCNN --struct_type unrelaxed --gpu_num 0 --training_fraction 1.0 --num_best_models 3 --reverify --select_best --predict --embeddings
+```
+
+### Analysis & Plotting
+```bash
+python scripts/analyze.py --all
+```
+
+---
+
+## 📚 Submodules & Advanced Usage
+
+- **CGCNN**: See `models/PerovskiteOrderingGCNNs_cgcnn/README.md` for details on custom datasets and standalone usage.
+- **e3nn**: See `models/PerovskiteOrderingGCNNs_e3nn/README.md` for symmetry-aware neural network details.
+- **PaiNN/NFF**: See `models/PerovskiteOrderingGCNNs_painn/README.md` and `scripts/cp3d/README.md` for advanced property prediction, force fields, and 3D molecular tasks.
+
+---
+
+## 🧑‍💻 Development & Contribution
+- All main workflows are now accessible via CLI scripts in `scripts/`.
+- Notebooks are provided for reference and legacy reproducibility, but all new work should use the scripts.
+- For submodule-specific development, see their respective READMEs.
+
+---
+
+## 📖 Citation
+If you use our codes, data, and/or models, please cite:
+```bibtex
 @article{peng2024learning,
   title={Learning Ordering in Crystalline Materials with Symmetry-Aware Graph Neural Networks},
   author={Jiayu Peng and James Damewood and Jessica Karaguesian and Jaclyn R. Lunger and Rafael Gómez-Bombarelli},
   journal={arXiv:2409.13851},
   url = {https://arxiv.org/abs/2409.13851},
   year={2024}
+}
 ```
+
+---
+
+## 🔗 References
+- [CGCNN Paper](https://link.aps.org/doi/10.1103/PhysRevLett.120.145301)
+- [e3nn Paper](https://onlinelibrary.wiley.com/doi/10.1002/advs.202004214)
+- [PaiNN Paper](https://arxiv.org/abs/2102.03150)
+- [NFF Documentation](https://github.com/learningmatter-mit/NeuralForceField)
+
+---
+
+## 🐳 Docker & Docker Compose Features (Updated)
+
+- The Dockerfile and docker-compose.yml are now in `/docker/`.
+- Use the same commands as before, but reference the new locations if building manually:
+  ```bash
+  docker build -t perovskite-gcnns -f docker/Dockerfile .
+  docker-compose -f docker/docker-compose.yml build
+  ```
+
+| Feature         | Dockerfile | docker-compose | Description |
+|----------------|------------|---------------|-------------|
+| CLI scripts    | ✅         | ✅            | Run all CLI workflows in a container |
+| GPU support    | ✅         | ✅            | Use `--gpus all` (Docker) or enable in compose for GPU |
+| Jupyter        | ✅         | ✅            | Expose port 8888 for notebooks |
+| Volume mount   | ✅         | ✅            | Mounts your code/data for persistence |
+| Multi-service  |            | ✅            | Separate app & Jupyter services |
+
+### Using docker-compose
+
+#### 1. Build all services
+```bash
+docker-compose build
+```
+
+#### 2. Run the main CLI environment (CPU)
+```bash
+docker-compose run --rm app
+```
+
+#### 3. Run with GPU (NVIDIA Docker)
+```bash
+docker-compose run --rm --gpus all app
+```
+
+#### 4. Start a Jupyter notebook server
+```bash
+docker-compose up jupyter
+```
+- Access at [http://localhost:8888](http://localhost:8888)
+
+#### 5. Run CLI scripts inside the container
+Once inside the `app` service shell:
+```bash
+python scripts/train.py --help
+python scripts/infer.py --help
+python scripts/analyze.py --help
+```
+
+#### 6. Enable GPU in compose (alternative)
+Uncomment the `deploy` or `runtime: nvidia` lines in `docker-compose.yml` as needed for your Docker version.
+
+---

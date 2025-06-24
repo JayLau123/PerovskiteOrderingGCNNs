@@ -1,0 +1,16 @@
+wandb_version: 1
+
+MaxEpochs:
+  value: 100
+activation:
+  value: swish
+batch_size:
+  value: 4
+log2_feat_dim:
+  value: 5
+log_lr:
+  value: -4
+num_conv:
+  value: 2
+reduceLR_patience:
+  value: 11

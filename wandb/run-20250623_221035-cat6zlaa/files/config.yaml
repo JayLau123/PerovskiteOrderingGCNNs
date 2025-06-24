@@ -1,0 +1,57 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    python_version: 3.10.11
+    cli_version: 0.16.3
+    framework: torch
+    is_jupyter_run: true
+    is_kaggle_kernel: false
+    start_time: 1750731035.592493
+    t:
+      1:
+      - 1
+      - 5
+      - 53
+      - 55
+      - 77
+      - 105
+      2:
+      - 1
+      - 5
+      - 53
+      - 55
+      - 77
+      - 105
+      3:
+      - 2
+      - 23
+      - 37
+      4: 3.10.11
+      5: 0.16.3
+      8:
+      - 1
+      - 5
+      13: linux-x86_64
+MaxEpochs:
+  desc: null
+  value: 100
+activation:
+  desc: null
+  value: ReLU
+batch_size:
+  desc: null
+  value: 8
+log2_feat_dim:
+  desc: null
+  value: 6
+log_lr:
+  desc: null
+  value: -5
+num_conv:
+  desc: null
+  value: 1
+reduceLR_patience:
+  desc: null
+  value: 23

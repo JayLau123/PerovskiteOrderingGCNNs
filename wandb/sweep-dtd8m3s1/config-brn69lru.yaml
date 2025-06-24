@@ -1,0 +1,24 @@
+wandb_version: 1
+
+MaxEpochs:
+  value: 100
+batch_size:
+  value: 12
+len_embedding_feature_vector:
+  value: 64
+log_lr:
+  value: -5
+multiplicity_irreps:
+  value: 16
+num_conv:
+  value: 3
+num_hidden_feature:
+  value: 64
+num_hidden_layer:
+  value: 0
+num_radial_neurons:
+  value: 64
+num_radical_basis:
+  value: 10
+reduceLR_patience:
+  value: 22
