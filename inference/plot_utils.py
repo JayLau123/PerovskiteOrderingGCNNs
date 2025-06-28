@@ -4,7 +4,8 @@ import pandas as pd
 from sklearn.decomposition import PCA
 from pymatgen.core import Structure
 
-from training.sigopt_utils import build_sigopt_name
+# from training.sigopt_utils import build_sigopt_name  # Original SigOpt utils (commented out)
+from training.wandb_utils import build_wandb_name  # Wandb utils (active)
 from inference.select_best_models import get_experiment_id
 from matplotlib.patches import FancyArrowPatch
 
@@ -18,9 +19,13 @@ def get_datapoint(target_prop, model, interp, training_fraction, struct):
     model_params["contrastive_weight"]= 1.0
     model_params["training_fraction"]=training_fraction
     model_params["long_range"]=False
-    sigopt_name = build_sigopt_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"])
+    # Original SigOpt name building (commented out)
+    # sigopt_name = build_sigopt_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"])
+    
+    # Wandb name building (active)
+    wandb_name = build_wandb_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"])
     exp_id = get_experiment_id(model_params, target_prop)
-    directory = "./best_models/" + model_params["model_type"] + "/" + sigopt_name + "/" +str(exp_id) + "/" + "best_"
+    directory = "./best_models/" + model_params["model_type"] + "/" + wandb_name + "/" +str(exp_id) + "/" + "best_"
     
     data_0 = pd.read_json(directory + "0" + "/test_set_predictions.json")
     data_1 = pd.read_json(directory + "1" + "/test_set_predictions.json")
@@ -166,8 +171,13 @@ def embeddings_from_file(model_params, test):
     target_prop = "dft_e_hull"
     idx = 0
     exp_id = get_experiment_id(model_params, "dft_e_hull")
-    sigopt_name = build_sigopt_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"], contrastive_weight=model_params["contrastive_weight"], training_fraction=model_params["training_fraction"], long_range=False)
-    directory = "./best_models/" + model_params["model_type"] + "/" + sigopt_name + "/" + str(exp_id) + "/" + "best_" + str(idx)
+    # Original SigOpt name building (commented out)
+    # sigopt_name = build_sigopt_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"], contrastive_weight=model_params["contrastive_weight"], training_fraction=model_params["training_fraction"], long_range=False)
+    # directory = "./best_models/" + model_params["model_type"] + "/" + sigopt_name + "/" + str(exp_id) + "/" + "best_" + str(idx)
+    
+    # Wandb name building (active)
+    wandb_name = build_wandb_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"], contrastive_weight=model_params["contrastive_weight"], training_fraction=model_params["training_fraction"], long_range=False)
+    directory = "./best_models/" + model_params["model_type"] + "/" + wandb_name + "/" + str(exp_id) + "/" + "best_" + str(idx)
     data = pd.read_json(directory + '/' + test + "_embeddings"+"_" + str(0) + ".json")
     return data
 
