@@ -19,22 +19,18 @@ def get_datapoint(target_prop, model, interp, training_fraction, struct):
     model_params["contrastive_weight"]= 1.0
     model_params["training_fraction"]=training_fraction
     model_params["long_range"]=False
-    # Original SigOpt name building (commented out)
-    # sigopt_name = build_sigopt_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"])
-    
     # Wandb name building (active)
     wandb_name = build_wandb_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"])
-    exp_id = get_experiment_id(model_params, target_prop)
-    directory = "./best_models/" + model_params["model_type"] + "/" + wandb_name + "/" +str(exp_id) + "/" + "best_"
-    
+    directory = "./best_models/" + model_params["model_type"] + "/" + wandb_name + "/best_"
+
     data_0 = pd.read_json(directory + "0" + "/test_set_predictions.json")
     data_1 = pd.read_json(directory + "1" + "/test_set_predictions.json")
     data_2 = pd.read_json(directory + "2" + "/test_set_predictions.json")
-        
+    
     pred_0 = np.asarray(flatten(list(data_0["predicted_" + target_prop]))).reshape(-1).flatten()
     pred_1 = np.asarray(flatten(list(data_1["predicted_" + target_prop]))).reshape(-1).flatten()
     pred_2 = np.asarray(flatten(list(data_2["predicted_" + target_prop]))).reshape(-1).flatten()
-        
+    
     errors = [np.mean(np.abs(pred_0 - data_0[target_prop])), 
               np.mean(np.abs(pred_1 - data_1[target_prop])), 
               np.mean(np.abs(pred_2 - data_2[target_prop]))
@@ -60,11 +56,10 @@ def get_series(prop, model, interp, struct):
 
 
 def get_property(prop, struct):
-    
     CGCNN = get_series(prop, "CGCNN", False, struct)
-    e3nn = get_series(prop, "e3nn", False, struct)
+    # e3nn = get_series(prop, "e3nn", False, struct)  # Commented out as per new requirements
     
-    return CGCNN, e3nn
+    return CGCNN, None
 
 
 def flatten(matrix):

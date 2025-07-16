@@ -107,14 +107,11 @@ def get_model_prediction(test_set_type, model_params, gpu_num, target_prop, num_
     
     # Wandb name building (active)
     wandb_name = build_wandb_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"],long_range=model_params["long_range"])
-    exp_id = get_experiment_id(model_params, target_prop)
+    # exp_id = get_experiment_id(model_params, target_prop)  # No longer needed for directory
 
     for idx in range(num_best_models):
-        # Original SigOpt directory (commented out)
-        # directory = "./best_models/" + model_params["model_type"] + "/" + sigopt_name + "/" +str(exp_id) + "/" + "best_" + str(idx)
-        
-        # Wandb directory (active)
-        directory = "./best_models/" + model_params["model_type"] + "/" + wandb_name + "/" +str(exp_id) + "/" + "best_" + str(idx)
+        # Updated directory structure: no exp_id in path
+        directory = "./best_models/" + model_params["model_type"] + "/" + wandb_name + "/" + "best_" + str(idx)
         model, normalizer = load_model(gpu_num, train_loader, model_params, directory, target_prop,per_site=per_site)
         start_3 = time.time()
         prediction = evaluate_model_with_tracked_ids(model, normalizer, gpu_num, test_loader, model_params)

@@ -1,9 +1,12 @@
-#!/bin/bash
 
 # Build script for Perovskite GCNN Singularity Container
 # This script builds the container for HPC environments
 
-set -e  # Exit on any error
+#SBATCH --partition=general-compute
+#SBATCH --qos=general-compute
+#SBATCH --mem=64000
+#SBATCH --time=02:00:00
+
 
 echo "Building Perovskite GCNN Singularity Container..."
 
@@ -20,13 +23,13 @@ fi
 echo "Using container command: $CONTAINER_CMD"
 
 # Set container name
-CONTAINER_NAME="perovskite_gcnn.sif"
+CONTAINER_NAME="perovskite_exp.sif"
 
 # Build the container
 echo "Building container: $CONTAINER_NAME"
 echo "This may take 30-60 minutes depending on your internet connection and system..."
 
-$CONTAINER_CMD build --fakeroot $CONTAINER_NAME perovskite_gcnn.def
+$CONTAINER_CMD build --fakeroot $CONTAINER_NAME perovskite_exp.def
 
 # Test the container
 echo "Testing the container..."
