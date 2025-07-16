@@ -72,6 +72,110 @@ All our data and trained models are archived on Zenodo ([DOI: 10.5281/zenodo.138
 - [2_model_inference.ipynb](2_model_inference.ipynb): This notebook provides examples of how to verify the performance of GCNNs on the validation set, select the top-performing models accordingly, compute the prediction on the test and holdout sets, and extract the latent embeddings of CGCNN and e3nn after all message passing and graph convolution layers.
 - [3_model_analysis.ipynb](3_model_analysis.ipynb): This notebook provides examples of how to reproduce all major figures in this manuscript.
 
+## Scripted Setup and HPC Usage
+
+### 1. Automated Project Setup (Recommended)
+
+To automatically download all required data and models, and set up the conda environment, run:
+
+```bash
+bash scripts/setup_project.sh
+```
+
+This script will:
+- Download and extract the datasets and model files from Zenodo.
+- Set up the conda environment (using the provided environment.yml if available).
+- Ensure you are ready to run the notebooks or scripts.
+
+### 2. Running Jupyter Notebooks Locally
+
+After setup, activate the environment and launch Jupyter:
+
+```bash
+conda activate Perovskite_ML_Environment
+jupyter notebook
+```
+
+Then open the desired notebook (e.g., `1_model_training.ipynb`) in your browser.
+
+### 3. Building and Using Containers for HPC (UB CCR or similar)
+
+#### a. Build the Singularity/Apptainer Container
+
+On a system with Singularity/Apptainer installed, run:
+
+```bash
+bash scripts/build_container.sh
+```
+
+This will create a container file (e.g., `perovskite_exp.sif`).
+
+#### b. Submitting a Job on UB CCR (or other SLURM-based HPC)
+
+Edit `scripts/run_container_job.sh` to set your email and any module loads required by your cluster. Then submit the job:
+
+```bash
+sbatch scripts/run_container_job.sh
+```
+
+This script will:
+- Pull the required container if not present.
+- Bind your data and output directories.
+- Run the training notebook or script inside the container with GPU support.
+
+**To run a different notebook or script, modify the relevant line in `run_container_job.sh` (see comments in the script).**
+
+#### c. Example: Running a Python Script in the Container (Interactive)
+
+```bash
+apptainer exec --nv perovskite_exp.sif python your_script.py
+```
+
+Or for Jupyter:
+
+```bash
+apptainer exec --nv perovskite_exp.sif jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+```
+
+#### d. Submitting Only One Job from the Job Array
+
+By default, `scripts/run_container_job.sh` uses a SLURM job array to run all combinations of model and dataset. If you want to submit only one specific job (e.g., just CGCNN on relaxed), follow these steps:
+
+1. **Edit the Array Line**
+   
+   Find this line in `scripts/run_container_job.sh`:
+   ```bash
+   #SBATCH --array=0-3
+   ```
+   Change it to the specific job index you want to run. For example, to run only the first job:
+   ```bash
+   #SBATCH --array=0
+   ```
+
+2. **Job Index Mapping**
+   The mapping of job indices to model/dataset combinations is:
+   - `0`: CGCNN, relaxed
+   - `1`: CGCNN, unrelaxed
+   - `2`: e3nn, relaxed
+   - `3`: e3nn, unrelaxed
+
+   For example, to run only e3nn on relaxed, use:
+   ```bash
+   #SBATCH --array=2
+   ```
+
+3. **Submit the Job**
+   After editing, submit as usual:
+   ```bash
+   sbatch scripts/run_container_job.sh
+   ```
+
+**Tip:** You can also run a range or a comma-separated list, e.g. `#SBATCH --array=1,3` to run only jobs 1 and 3.
+
+---
+
+For more details, see the comments in each script in the `scripts/` directory.
+
 ## Citation
 
 If you use our codes, data, and/or models, please cite the following paper:
