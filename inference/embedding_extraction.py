@@ -6,7 +6,8 @@ import random
 from processing.dataloader.dataloader import get_dataloader
 from processing.utils import filter_data_by_properties,select_structures
 from processing.interpolation.Interpolation import *
-from training.sigopt_utils import build_sigopt_name
+# from training.sigopt_utils import build_sigopt_name  # Original SigOpt utils (commented out)
+from training.wandb_utils import build_wandb_name  # Wandb utils (active)
 from processing.create_model.create_model import create_model
 from inference.select_best_models import get_experiment_id
 from inference.test_model_prediction import evaluate_model_with_tracked_ids, load_model
@@ -87,12 +88,17 @@ def get_model_embedding(test_set_type, model_params, gpu_num, num_best_models, t
     train_loader = get_dataloader(train_data,target_prop,model_type,1,interpolation)
     test_loader = get_dataloader(test_data,target_prop,model_type,1,interpolation)       
 
-    sigopt_name = build_sigopt_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"])
-    exp_id = get_experiment_id(model_params, target_prop)
+    # Original SigOpt name building (commented out)
+    # sigopt_name = build_sigopt_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"])
+    # exp_id = get_experiment_id(model_params, target_prop)
     
+    # Wandb name building (active)
+    wandb_name = build_wandb_name(model_params["data"], target_prop, model_params["struct_type"], model_params["interpolation"], model_params["model_type"],contrastive_weight=model_params["contrastive_weight"],training_fraction=model_params["training_fraction"])
+    # exp_id = get_experiment_id(model_params, target_prop)  # No longer needed for directory
 
     for idx in range(num_best_models):
-        directory = "./best_models/" + model_params["model_type"] + "/" + sigopt_name + "/" +str(exp_id) + "/" + "best_" + str(idx)
+        # Updated directory structure: no exp_id in path
+        directory = "./best_models/" + model_params["model_type"] + "/" + wandb_name + "/" + "best_" + str(idx)
         model, normalizer = load_model(gpu_num, train_loader, model_params, directory, target_prop,per_site=False)
 
         activation = {}

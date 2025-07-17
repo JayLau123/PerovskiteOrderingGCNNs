@@ -244,4 +244,5 @@ dependencies:
       - uvicorn==0.27.1
       - werkzeug==3.0.1
       - wrapt==1.16.0
+      - wandb==0.16.3
 prefix: /home/jypeng/miniconda3/envs/Perovskite_ML_Environment

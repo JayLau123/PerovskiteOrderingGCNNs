@@ -1,13 +1,15 @@
 # Do not track these directories
 data/*.json
-saved_models/CGCNN/
-saved_models/e3nn/
-saved_models/Painn/
-best_models/CGCNN/
-best_models/e3nn/
-best_models/Painn/
 archived/
 figures/
+wandb/
+saved_models/CGCNN/
+saved_models/Painn/
+saved_models/e3nn/
+best_models/CGCNN/
+best_models/Painn/
+best_models/e3nn/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
