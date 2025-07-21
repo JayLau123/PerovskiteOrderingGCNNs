@@ -83,7 +83,7 @@ Afterwards, you can run the following three notebooks to reproduce the main resu
 - [2_model_inference.ipynb](2_model_inference.ipynb): This notebook provides examples of how to verify the performance of GCNNs on the validation set, select the top-performing models accordingly, compute the prediction on the test and holdout sets, and extract the latent embeddings of CGCNN and e3nn after all message passing and graph convolution layers.
 - [3_model_analysis.ipynb](3_model_analysis.ipynb): This notebook provides examples of how to reproduce all major figures in this manuscript.
 
-### If working on a HPC cluster
+### If working on an HPC cluster
 
 An example is provided here for running deep learning codes on HPC clusters (such as those in [UB CCR](https://www.buffalo.edu/ccr.html)) using containers (for Conda) and the Slurm job scheduler.
 
