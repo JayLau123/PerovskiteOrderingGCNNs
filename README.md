@@ -85,7 +85,7 @@ Afterwards, you can run the following three notebooks to reproduce the main resu
 
 ### If working on a HPC cluster
 
-A generalized example is provided here for running deep learning codes on HPC clusters (such as those in [UB CCR](https://www.buffalo.edu/ccr.html)) using containers (for Conda) and the Slurm job scheduler.
+An example is provided here for running deep learning codes on HPC clusters (such as those in [UB CCR](https://www.buffalo.edu/ccr.html)) using containers (for Conda) and the Slurm job scheduler.
 
 *To be added*
 
