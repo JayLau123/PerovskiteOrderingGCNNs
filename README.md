@@ -73,11 +73,6 @@ conda env create -f environment.yml
 conda activate Perovskite_ML_Environment
 ```
 
-After setup, activate the environment:
-```
-conda activate Perovskite_ML_Environment
-jupyter notebook
-```
 Afterwards, you can run the following three notebooks to reproduce the main results of this paper:
 - [1_model_training.ipynb](1_model_training.ipynb): This notebook provides examples of how to train GCNNs on the training dataset and conduct hyperparameter optimization based on the loss on the validation set.
 - [2_model_inference.ipynb](2_model_inference.ipynb): This notebook provides examples of how to verify the performance of GCNNs on the validation set, select the top-performing models accordingly, compute the prediction on the test and holdout sets, and extract the latent embeddings of CGCNN and e3nn after all message passing and graph convolution layers.
