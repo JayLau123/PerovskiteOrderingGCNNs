@@ -19,7 +19,7 @@ from training.wandb_utils import build_wandb_name
 from training.evaluate import *
 
 
-def run_wandb_experiment(struct_type,model_type,gpu_num,experiment_id=None,parallel_band=1,obs_budget=50,training_fraction=1.0,data_name="data/",target_prop="dft_e_hull",interpolation=False,contrastive_weight=1.0,training_seed=0,nickname=""):
+def run_wandb_experiment(struct_type,model_type,gpu_num,experiment_id=None,parallel_band=1,obs_budget=50,training_fraction=1.0,data_name="data/",target_prop="dft_e_hull",interpolation=False,contrastive_weight=1.0,training_seed=0,nickname="",resume_sweep_id=None):
     """Run wandb hyperparameter optimization experiment"""
     
     if data_name == "data/":
@@ -66,8 +66,39 @@ def run_wandb_experiment(struct_type,model_type,gpu_num,experiment_id=None,paral
     sweep_config_without_project = sweep_config.copy()
     del sweep_config_without_project['project']
     
-    sweep_id = wandb.sweep(sweep_config_without_project, project=project_name)
-    print(f"Created wandb sweep with ID: {sweep_id}")
+    # Check if we're resuming an existing sweep
+    if resume_sweep_id is not None:
+        try:
+            # Try to get the existing sweep
+            api = wandb.Api()
+            sweep = api.sweep(f"{project_name}/{resume_sweep_id}")
+            
+            # Count completed runs
+            completed_runs = len([run for run in sweep.runs if run.state == "finished"])
+            print(f"Found existing sweep with ID: {resume_sweep_id}")
+            print(f"Completed runs: {completed_runs}")
+            print(f"Original budget: {obs_budget}")
+            
+            # Calculate remaining budget
+            remaining_budget = obs_budget - completed_runs
+            if remaining_budget <= 0:
+                print(f"All {obs_budget} runs have been completed. No more runs needed.")
+                return
+            
+            print(f"Resuming sweep with {remaining_budget} remaining runs")
+            sweep_id = resume_sweep_id
+            
+        except Exception as e:
+            print(f"Error accessing sweep {resume_sweep_id}: {e}")
+            print("Creating new sweep instead...")
+            sweep_id = wandb.sweep(sweep_config_without_project, project=project_name)
+            print(f"Created new wandb sweep with ID: {sweep_id}")
+    else:
+        # Create new sweep
+        sweep_id = wandb.sweep(sweep_config_without_project, project=project_name)
+        print(f"Created wandb sweep with ID: {sweep_id}")
+        remaining_budget = obs_budget
+    
     print(f"Project: {project_name}")
 
     # Define the training function for the sweep
@@ -123,10 +154,10 @@ def run_wandb_experiment(struct_type,model_type,gpu_num,experiment_id=None,paral
         shutil.rmtree(model_tmp_dir)
         torch.cuda.empty_cache()
     
-    # Run the sweep
-    wandb.agent(sweep_id, train_function, count=obs_budget)
+    # Run the sweep with remaining budget
+    wandb.agent(sweep_id, train_function, count=remaining_budget)
     
-    print(f"Completed wandb sweep with {obs_budget} observations")
+    print(f"Completed wandb sweep with {remaining_budget} observations")
 
 
 def wandb_evaluate_model(data_name,hyperparameters,processed_data,target_prop,interpolation,struct_type,model_type,contrastive_weight,training_fraction,training_seed,experiment_id,observation_count,gpu_num,nickname):
@@ -226,6 +257,53 @@ def convert_hyperparameters(hyperparameters):
     return hyperparameters
 
 
+def list_existing_sweeps(project_name=None, model_type=None, struct_type=None):
+    """List existing sweeps that can be resumed"""
+    try:
+        api = wandb.Api()
+        
+        # If no project specified, try to construct it from model and struct type
+        if project_name is None and model_type is not None and struct_type is not None:
+            if struct_type in ["unrelaxed", "relaxed"]:
+                project_name = f"perovskite-ordering-{model_type.lower()}-{struct_type}"
+            else:
+                project_name = f"perovskite-ordering-{model_type.lower()}-{struct_type}"
+        
+        if project_name is None:
+            print("Please specify project_name or provide model_type and struct_type")
+            return
+        
+        print(f"Searching for sweeps in project: {project_name}")
+        
+        # Get all sweeps in the project
+        sweeps = api.sweeps(project_name)
+        
+        if not sweeps:
+            print(f"No sweeps found in project: {project_name}")
+            return
+        
+        print(f"\nFound {len(sweeps)} sweeps:")
+        print("-" * 80)
+        
+        for sweep in sweeps:
+            # Count runs by state
+            finished_runs = len([run for run in sweep.runs if run.state == "finished"])
+            running_runs = len([run for run in sweep.runs if run.state == "running"])
+            failed_runs = len([run for run in sweep.runs if run.state == "failed"])
+            total_runs = len(sweep.runs)
+            
+            print(f"Sweep ID: {sweep.id}")
+            print(f"Name: {sweep.name}")
+            print(f"State: {sweep.state}")
+            print(f"Runs: {finished_runs} finished, {running_runs} running, {failed_runs} failed (total: {total_runs})")
+            print(f"Created: {sweep.created_at}")
+            print("-" * 80)
+            
+    except Exception as e:
+        print(f"Error accessing wandb API: {e}")
+        print("Make sure you're logged in to wandb: wandb login")
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Hyperparameter optimization for perovskite ordering GCNNs using wandb')
     parser.add_argument('--data_name', default = "data/", type=str, metavar='name',
@@ -250,7 +328,16 @@ if __name__ == '__main__':
                         help="nickname for temporary folder")
     parser.add_argument('--budget', default = 50, type=int, metavar='wandb_props',
                         help="budget of wandb sweep (default: 50)")
+    parser.add_argument('--resume_sweep_id', default=None, type=str, metavar='sweep_id',
+                        help="ID of the sweep to resume (optional)")
+    parser.add_argument('--list_sweeps', action='store_true',
+                        help="list existing sweeps that can be resumed")
     args = parser.parse_args()
+
+    # Handle list sweeps option
+    if args.list_sweeps:
+        list_existing_sweeps(model_type=args.model, struct_type=args.struct_type)
+        sys.exit(0)
 
     data_name = args.data_name
     target_prop = args.prop
@@ -262,6 +349,7 @@ if __name__ == '__main__':
     training_fraction = args.training_fraction
     training_seed = args.training_seed
     obs_budget = args.budget
+    resume_sweep_id = args.resume_sweep_id
     
     if struct_type not in ["unrelaxed", "relaxed", "spud", "M3Gnet_relaxed"]:
         raise ValueError('struct type is not available')
@@ -273,4 +361,4 @@ if __name__ == '__main__':
     else:
         raise ValueError('interpolation needs to be yes or no')    
     
-    run_wandb_experiment(struct_type,model_type,gpu_num,None,1,obs_budget,training_fraction,data_name,target_prop,interpolation,contrastive_weight,training_seed,nickname) 
+    run_wandb_experiment(struct_type,model_type,gpu_num,None,1,obs_budget,training_fraction,data_name,target_prop,interpolation,contrastive_weight,training_seed,nickname,resume_sweep_id) 

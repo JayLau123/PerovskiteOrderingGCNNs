@@ -1,10 +1,10 @@
 [submodule "models/PerovskiteOrderingGCNNs_cgcnn"]
 	path = models/PerovskiteOrderingGCNNs_cgcnn
-	url = git@github.com:learningmatter-mit/PerovskiteOrderingGCNNs_cgcnn.git
+	url = git@github.com:jiayu-peng-lab/PerovskiteOrderingGCNNs_cgcnn.git
 [submodule "models/PerovskiteOrderingGCNNs_painn"]
 	path = models/PerovskiteOrderingGCNNs_painn
-	url = git@github.com:learningmatter-mit/PerovskiteOrderingGCNNs_painn.git
+	url = git@github.com:jiayu-peng-lab/PerovskiteOrderingGCNNs_painn.git
 [submodule "models/PerovskiteOrderingGCNNs_e3nn"]
 	path = models/PerovskiteOrderingGCNNs_e3nn
-	url = git@github.com:learningmatter-mit/PerovskiteOrderingGCNNs_e3nn.git
+	url = git@github.com:jiayu-peng-lab/PerovskiteOrderingGCNNs_e3nn.git
 	branch = main

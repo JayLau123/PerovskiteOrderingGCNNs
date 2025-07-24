@@ -1,4 +1,4 @@
-ootstrap: docker
+Bootstrap: docker
 From: continuumio/miniconda3:latest
 
 %post
