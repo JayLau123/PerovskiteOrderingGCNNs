@@ -174,6 +174,12 @@ python training/run_wandb_experiment.py --struct_type $DATASET --model $MODEL --
 
 Change the values as needed for your experiment.
 
+Once you have set the desired options, run the script with:
+
+```bash
+bash scripts/run_container_job.sh
+```
+
 ##### 2B. Interactive Shell
 
 Use this command to get the resource to perform the computation:
@@ -220,6 +226,12 @@ Then, in your interactive session, follow these steps:
    ```
    - Change `--struct_type` to `unrelaxed` and `--model` to `e3nn` as needed.
    - Adjust other arguments as desired (see above for details).
+
+Once you have set the desired options, run your experiment with:
+
+```bash
+python training/run_wandb_experiment.py --struct_type relaxed --model CGCNN --gpu 0 --budget 50 --training_fraction 1 --training_seed 0
+```
 
 7. **To resume a previous sweep, add the `--resume_sweep_id <sweep_id>` argument.**
 
