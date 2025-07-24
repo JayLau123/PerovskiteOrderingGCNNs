@@ -1,4 +1,5 @@
-
+# !/bin/bash
+#
 # Build script for Perovskite GCNN Singularity Container
 # This script builds the container for HPC environments
 
