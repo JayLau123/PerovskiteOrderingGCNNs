@@ -87,14 +87,13 @@ An example is provided here for running deep learning codes on HPC clusters (suc
 #### 1. Create a Singularity/Apptainer `.def` file from `environment.yml` or `requirements.txt`:
 
 To set the Apptainer cache directory, run:
-
-```bash
+```
 export APPTAINER_CACHEDIR="$(pwd)/.apptainer_cache"
 ```
 
-Example `.def` file:
+We have created [`scripts/perovskite_gcnn.def`](scripts/perovskite_gcnn.def) for this repo. A generalized example for `.def` file template:
 
-```text
+```
 Bootstrap: docker
 From: continuumio/miniconda3:latest
 
@@ -130,26 +129,23 @@ EOF
     exec "$@"
 ```
 
-#### 2. Run job on the UB CCR (two options):
+#### 2. Run job on UB CCR's HPC clusters (two options):
 
 ##### 2A. Submitting Jobs
 
-You can edit `scripts/run_container_job.sh` to set the desired model and dataset by changing the `MODEL` and `DATASET` variables in the script.
+This approach allows you to submit jobs directly using the Slurm scheduler.
 
-- `MODEL`: Specifies which graph neural network architecture to use. Set to either `CGCNN` or `e3nn`.
-  - Example: `MODEL="CGCNN"` or `MODEL="e3nn"`
-- `DATASET`: Specifies which dataset to use for the experiment. Set to either `relaxed` or `unrelaxed`.
-  - Example: `DATASET="relaxed"` or `DATASET="unrelaxed"`
+You can edit [`scripts/run_container_job.sh`](scripts/run_container_job.sh) to set the desired model and dataset by changing the `MODEL` and `DATASET` variables:
+- `MODEL`: Specifies which graph neural network architecture to use (Example: `MODEL="CGCNN"` or `MODEL="e3nn"`)
+- `DATASET`: Specifies which dataset to use for the experiment. (Example: `DATASET="relaxed"` or `DATASET="unrelaxed"`)
 
 To change these, open `scripts/run_container_job.sh` in a text editor and modify the lines:
-
-```bash
+```
 MODEL="CGCNN"         # or "e3nn"
 DATASET="relaxed"     # or "unrelaxed"
 ```
 
 The script also passes several command-line arguments to the Python experiment script:
-
 - `--budget 50`: Number of hyperparameter optimization trials or max training runs.
 - `--training_fraction 1`: Fraction of the available training data to use (1 = 100%).
 - `--training_seed 0`: Random seed for reproducibility.
@@ -157,51 +153,48 @@ The script also passes several command-line arguments to the Python experiment s
 - `--resume_sweep_id <sweep_id>`: (Optional) Resume a previous hyperparameter sweep.
 
 To change these arguments, edit the last line of the script:
-
-```bash
+```
 python training/run_wandb_experiment.py --struct_type $DATASET --model $MODEL --gpu 0 --budget 50 --training_fraction 1 --training_seed 0
 ```
-
 Change the values as needed for your experiment.
 
 Once you have set the desired options, run the script with:
-
-```bash
+```
 bash scripts/run_container_job.sh
 ```
 
 ##### 2B. Interactive Shell
 
-Use this command to get the resource to perform the computation:
+This approach allows you to run and debug your experiments interactively, monitor outputs in real time, and make adjustments as needed.
 
-```bash
+Use this command to get the resource to perform the computation:
+```
 salloc --partition=general-compute --qos=general-compute --mem=64G --time=72:00:00 --gpus-per-node=1
 ```
 
 Then, in your interactive session, follow these steps:
-
 1. **(If needed) Load Apptainer/Singularity (module name may vary by cluster):**
-   ```bash
+   ```
    module load apptainer  # or singularity
    ```
 
 2. **Navigate to your project directory (if not already there):**
-   ```bash
+   ```
    cd /path/to/PerovskiteOrderingGCNNs
    ```
 
 3. **Start an interactive shell inside the container:**
-   ```bash
+   ```
    apptainer shell --nv --bind $(pwd):/workspace --pwd /workspace perovskite_exp.sif
    ```
 
 4. **Activate the conda environment inside the container:**
-   ```bash
+   ```
    source activate perovskite_env
    ```
 
 5. **(Optional) Set up cache directories for matplotlib, pip, etc.:**
-   ```bash
+   ```
    mkdir -p /workspace/cache/{matplotlib,pip,fontconfig}
    export MPLCONFIGDIR=/workspace/cache/matplotlib
    export PIP_CACHE_DIR=/workspace/cache/pip
@@ -211,21 +204,13 @@ Then, in your interactive session, follow these steps:
    ```
 
 6. **Run your experiment (example):**
-   ```bash
+   ```
    python training/run_wandb_experiment.py --struct_type relaxed --model CGCNN --gpu 0 --budget 50 --training_fraction 1 --training_seed 0
    ```
    - Change `--struct_type` to `unrelaxed` and `--model` to `e3nn` as needed.
    - Adjust other arguments as desired (see above for details).
 
-Once you have set the desired options, run your experiment with:
-
-```bash
-python training/run_wandb_experiment.py --struct_type relaxed --model CGCNN --gpu 0 --budget 50 --training_fraction 1 --training_seed 0
-```
-
 7. **To resume a previous sweep, add the `--resume_sweep_id <sweep_id>` argument.**
-
-This approach allows you to run and debug your experiments interactively, monitor outputs in real time, and make adjustments as needed.
 
 ---
 
