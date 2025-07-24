@@ -7,25 +7,21 @@
 
 Repo for our paper **"Learning Ordering in Crystalline Materials with Symmetry-Aware Graph Neural Networks"** ([preprint on arXiv](https://arxiv.org/abs/2409.13851)).
 
----
-
 ## 📥 Download
 
 To start, clone this repo and all its submodules to your local directory or a workstation:
-
-```bash
+```
 git clone --recurse-submodules git@github.com:jiayu-peng-lab/PerovskiteOrderingGCNNs.git
 ```
-**or**
-```bash
+or
+```
 git clone git@github.com:jiayu-peng-lab/PerovskiteOrderingGCNNs.git
 cd PerovskiteOrderingGCNNs
 git submodule update --init
 ```
 
-Our codes are built upon previous implementations of [CGCNN](https://github.com/-mit/PerovskiteOrderingGCNNs_cgcnn/tree/af4c0bf6606da1b46887ed8c29521d199d5e2798), [e3nn](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_e3nn/tree/408b90e922a2a9c7bae2ad95433aae97d1a58494), and [PaiNN](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_painn/tree/e7980a52af4936addc5fb03dbc50d4fc74fe98fc), which are included as submodules in this repo. If there are any changes in their corresponding GitHub repos, update the submodules with:
-
-```bash
+Our codes are built upon previous implementations of [CGCNN](https://github.com/-mit/PerovskiteOrderingGCNNs_cgcnn/tree/af4c0bf6606da1b46887ed8c29521d199d5e2798), [e3nn](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_e3nn/tree/408b90e922a2a9c7bae2ad95433aae97d1a58494), and [PaiNN](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_painn/tree/e7980a52af4936addc5fb03dbc50d4fc74fe98fc), which are included as submodules in this repo. If there are any changes in their corresponding GitHub repos, the following command will update the submodules in this repo:
+```
 git submodule update --remote --merge
 ```
 
@@ -36,21 +32,16 @@ git submodule update --remote --merge
 ### 🖥️ If working on a Linux workstation
 
 To automatically download all required data and models and set up the conda environment, run:
-
-```bash
+```
 bash scripts/setup_project.sh
 ```
-
 This script will:
 - Download and extract the datasets and model files from Zenodo.
-- Set up the Conda environment (using the provided [`environment.yml`](environment.yml) if available).
+- Set up the Conda environment (using the provided [environment.yml](environment.yml) if available).
 - Ensure you are ready to run the notebooks or scripts.
 
-Alternatively, you can download all our data and trained models manually; they are archived on Zenodo ([DOI: 10.5281/zenodo.13820311](https://doi.org/10.5281/zenodo.13820311)) and Materials Data Facility ([DOI: 10.18126/ncqt-rh18](https://doi.org/10.18126/ncqt-rh18)). Please place all data and model files in the corresponding directories and then refer to the following Jupyter notebooks to reproduce the results of our paper.
-
-If you want to install the Conda environment manually, this repository requires the following packages:
-
-```text
+Alternatively, you can download all our data and trained models manually; they are archived on Zenodo ([DOI: 10.5281/zenodo.13820311](https://doi.org/10.5281/zenodo.13820311)) and Materials Data Facility ([DOI: 10.18126/ncqt-rh18](https://doi.org/10.18126/ncqt-rh18)). Please place all data and model files in the corresponding directories and then refer to the following Jupyter notebooks to reproduce the results of our paper. Moreover, if you want to install the Conda environment manually, this repository requires the following packages to run correctly:
+```
 pandas            1.5.3
 scipy             1.10.1
 numpy             1.24.3
@@ -77,8 +68,7 @@ boken             3.3.4
 ```
 
 All these packages can be installed using the [`environment.yml`](environment.yml) file and Conda:
-
-```bash
+```
 conda env create -f environment.yml
 conda activate Perovskite_ML_Environment
 ```
