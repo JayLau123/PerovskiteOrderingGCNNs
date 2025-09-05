@@ -69,14 +69,119 @@ This will pull the newest commits from the submodule repos (instead of just the 
 
 ### 🖥️ If working on a Linux workstation
 
+	•	Make sure your VS Code terminal is running inside the workstation (not your Mac local).
+	•	If using GPU, verify the GPU is available:
+```
+nvidia-smi
+```
+	•	If any module is missing, you may need to:
+```
+conda activate Perovskite_ML_Environment
+pip install <package_name>
+```
+
+
+#### Step 1: Run the setup script
+
 To automatically download all required data and models and set up the conda environment, run:
 ```
 bash scripts/setup_project.sh
 ```
 This script will:
 - Download and extract the datasets and model files from Zenodo.
-- Set up the Conda environment (using the provided [environment.yml](environment.yml) if available).
+- Create and configure the conda environment using the provided [environment.yml](environment.yml).
 - Ensure you are ready to run the notebooks or scripts.
+
+
+#### Step 2: Verify Conda Environment
+
+After the script finishes, activate the conda environment:
+
+```
+conda activate Perovskite_ML_Environment
+```
+
+Check Python and installed packages:
+
+```
+python --version
+conda list
+```
+
+	•	Ensure wandb, pytorch, pymatgen, and e3nn are installed.
+	•	Your GPU-related packages (like pytorch-cuda) should match your workstation GPU setup.
+
+#### Step 3: Test wandb login
+
+Since the first notebook uses wandb, test that it works:
+
+```
+import wandb
+wandb.login()
+```
+
+	•	This should prompt you to authenticate with your account.
+	•	You only need to log in once per environment session.
+
+#### Step 4: Run the First Notebook in VS Code
+
+	1.	In VS Code, navigate to:
+```
+/data2/users/chuanyul/PerovskiteOrderingGCNNs
+```
+	Open the first .ipynb file (e.g., tutorial_1_training.ipynb).
+
+	2.	Select the Correct Kernel
+	•	At the top-right of the notebook, click the kernel dropdown.
+	•	Select:
+```
+Perovskite_ML_Environment
+```
+
+(This is the conda environment created by setup_project.sh.)
+
+	3.	Run Cells One by One
+	•	Use Shift + Enter to execute each cell sequentially.
+	•	This is exactly like running in a browser-based Jupyter Notebook.
+ 
+	4.	Check WandB Login
+	•	If you run:
+
+```
+import wandb
+wandb.login()
+```
+
+It may prompt a URL to authenticate.
+
+	•	Follow the link, copy the code, and paste it back into the notebook cell.
+
+	5.	Set Parameters for Training
+ 
+The notebook likely has a cell for parameters like:
+
+```
+struct_type = 'relaxed'        # options: unrelaxed, relaxed, M3Gnet_relaxed
+model_type = 'CGCNN'           # options: CGCNN, e3nn, PaiNN
+gpu_num = 0                     # which GPU to use
+obs_budget = 20                 # hyperparameter optimization budget
+training_fraction = 1.0         # fraction of dataset to use
+training_seed = 42              # random seed
+```
+
+Adjust them if needed for your experiment.
+
+	6.	Run Training / Experiments
+	•	Execute the cells that call:
+```
+run_wandb_experiment(...)
+```
+
+	•	This will train the GCNN models and log metrics to WandB.
+
+
+
+---
 
 Alternatively, you can download all our data and trained models manually; they are archived on Zenodo ([DOI: 10.5281/zenodo.13820311](https://doi.org/10.5281/zenodo.13820311)) and Materials Data Facility ([DOI: 10.18126/ncqt-rh18](https://doi.org/10.18126/ncqt-rh18)). Please place all data and model files in the corresponding directories and then refer to the following Jupyter notebooks below to reproduce the results of our paper. Moreover, if you want to install the Conda environment manually, this repository requires the following packages to run correctly:
 ```
@@ -110,6 +215,11 @@ All these packages can be installed using the [`environment.yml`](environment.ym
 conda env create -f environment.yml
 conda activate Perovskite_ML_Environment
 ```
+
+
+
+
+
 
 Afterwards, you can run the following three notebooks to reproduce the main results of this paper:
 - [`1_model_training.ipynb`](1_model_training.ipynb): Train GCNNs and conduct hyperparameter optimization.
