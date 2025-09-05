@@ -94,9 +94,15 @@ This script will:
 - Create and configure the conda environment using the provided [environment.yml](environment.yml).
 - Ensure you are ready to run the notebooks or scripts.
 
-
 <img width="650" height="307" alt="Screenshot 2025-09-05 at 6 21 55 PM" src="https://github.com/user-attachments/assets/9a452c29-3325-43dc-bbe5-34ef4295ec56" />
 
+Check the files downloaded in the directory:
+
+<img width="720" height="255" alt="Screenshot 2025-09-05 at 6 26 27 PM" src="https://github.com/user-attachments/assets/8681d842-7886-4821-93e5-3d308ba5745f" />
+
+<img width="756" height="67" alt="Screenshot 2025-09-05 at 6 30 01 PM" src="https://github.com/user-attachments/assets/83f8e00f-fb96-44a4-8ccb-2cc701c650ca" />
+
+<img width="799" height="311" alt="Screenshot 2025-09-05 at 6 30 20 PM" src="https://github.com/user-attachments/assets/f71b5d3f-86d2-4882-8c73-c8ba63c0e41e" />
 
 
 #### Step 2: Verify Conda Environment
