@@ -95,6 +95,10 @@ This script will:
 - Ensure you are ready to run the notebooks or scripts.
 
 
+<img width="650" height="307" alt="Screenshot 2025-09-05 at 6 21 55 PM" src="https://github.com/user-attachments/assets/9a452c29-3325-43dc-bbe5-34ef4295ec56" />
+
+
+
 #### Step 2: Verify Conda Environment
 
 After the script finishes, activate the conda environment:
