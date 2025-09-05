@@ -36,8 +36,8 @@ Run:
 ```
 git submodule status
 ```
-	•	If you see commit hashes next to paths → they’re initialized. So your repo has the submodules properly cloned and ready to use.
-	•	If you see a - before them → they’re not initialized yet.
+- If you see commit hashes next to paths → they’re initialized. So your repo has the submodules properly cloned and ready to use.
+- If you see a - before them → they’re not initialized yet.
 
 2. If not initialized, run:
 
@@ -69,12 +69,14 @@ This will pull the newest commits from the submodule repos (instead of just the 
 
 ### 🖥️ If working on a Linux workstation
 
-	•	Make sure your VS Code terminal is running inside the workstation (not your Mac local).
-	•	If using GPU, verify the GPU is available:
+- Make sure your VS Code terminal is running inside the workstation (not your Mac local).
+- If using GPU, verify the GPU is available:
+
 ```
 nvidia-smi
 ```
-	•	If any module is missing, you may need to:
+
+- If any module is missing, you may need to:
 ```
 conda activate Perovskite_ML_Environment
 pip install <package_name>
@@ -108,8 +110,8 @@ python --version
 conda list
 ```
 
-	•	Ensure wandb, pytorch, pymatgen, and e3nn are installed.
-	•	Your GPU-related packages (like pytorch-cuda) should match your workstation GPU setup.
+- Ensure wandb, pytorch, pymatgen, and e3nn are installed.
+- Your GPU-related packages (like pytorch-cuda) should match your workstation GPU setup.
 
 #### Step 3: Test wandb login
 
@@ -120,43 +122,43 @@ import wandb
 wandb.login()
 ```
 
-	•	This should prompt you to authenticate with your account.
-	•	You only need to log in once per environment session.
+- This should prompt you to authenticate with your account.
+- You only need to log in once per environment session.
 
 #### Step 4: Run the First Notebook in VS Code
 
-	1.	In VS Code, navigate to:
+1. In VS Code, navigate to:
 ```
 /data2/users/chuanyul/PerovskiteOrderingGCNNs
 ```
 	Open the first .ipynb file (e.g., tutorial_1_training.ipynb).
 
-	2.	Select the Correct Kernel
-	•	At the top-right of the notebook, click the kernel dropdown.
-	•	Select:
+2. Select the Correct Kernel
+	- At the top-right of the notebook, click the kernel dropdown.
+	- Select:
 ```
 Perovskite_ML_Environment
 ```
 
 (This is the conda environment created by setup_project.sh.)
 
-	3.	Run Cells One by One
-	•	Use Shift + Enter to execute each cell sequentially.
-	•	This is exactly like running in a browser-based Jupyter Notebook.
+3. Run Cells One by One
+   
+	- Use Shift + Enter to execute each cell sequentially.
+	- This is exactly like running in a browser-based Jupyter Notebook.
  
-	4.	Check WandB Login
-	•	If you run:
+5. Check WandB Login
+
+If you run:
 
 ```
 import wandb
 wandb.login()
 ```
 
-It may prompt a URL to authenticate.
+It may prompt a URL to authenticate. Follow the link, copy the code, and paste it back into the notebook cell.
 
-	•	Follow the link, copy the code, and paste it back into the notebook cell.
-
-	5.	Set Parameters for Training
+5. Set Parameters for Training
  
 The notebook likely has a cell for parameters like:
 
@@ -171,13 +173,14 @@ training_seed = 42              # random seed
 
 Adjust them if needed for your experiment.
 
-	6.	Run Training / Experiments
-	•	Execute the cells that call:
+6. Run Training / Experiments
+
+Execute the cells that call:
 ```
 run_wandb_experiment(...)
 ```
 
-	•	This will train the GCNN models and log metrics to WandB.
+	- This will train the GCNN models and log metrics to WandB.
 
 
 
