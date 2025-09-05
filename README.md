@@ -58,9 +58,6 @@ This will pull the newest commits from the submodule repos (instead of just the 
 
 ⚠️ Careful: pulling remote changes could break compatibility if the upstream repos changed a lot. Usually you only do this if your PI or the repo owner told you to update. If not, --init --recursive is enough.
 
-⸻
-
-
 
 
 
