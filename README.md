@@ -17,9 +17,8 @@ or
 ```
 git clone git@github.com:jiayu-peng-lab/PerovskiteOrderingGCNNs.git
 cd PerovskiteOrderingGCNNs
-git submodule update --init
 ```
-
+---
 
 Our codes are built upon previous implementations of 
 
@@ -29,30 +28,31 @@ Our codes are built upon previous implementations of
 
 This means repo depends on submodules (basically Git repos nested inside our repo, used for libraries like CGCNN, e3nn, PaiNN). Above three are included as submodules in this repo. 
 
-⸻
 
 1. Check whether submodules are already initialized
 
 Run:
 
+```
 git submodule status
-
+```
 	•	If you see commit hashes next to paths → they’re initialized. So your repo has the submodules properly cloned and ready to use.
 	•	If you see a - before them → they’re not initialized yet.
 
-⸻
-
 2. If not initialized, run:
 
+```
 git submodule update --init --recursive
+```
 
 This downloads all the code from the submodule repos at the versions pinned in your project.
 
-⸻
 
 3. To sync with the latest upstream changes (what the README suggests), run:
 
+```
 git submodule update --remote --merge
+```
 
 This will pull the newest commits from the submodule repos (instead of just the pinned ones).
 
