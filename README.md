@@ -20,10 +20,51 @@ cd PerovskiteOrderingGCNNs
 git submodule update --init
 ```
 
-Our codes are built upon previous implementations of [CGCNN](https://github.com/-mit/PerovskiteOrderingGCNNs_cgcnn/tree/af4c0bf6606da1b46887ed8c29521d199d5e2798), [e3nn](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_e3nn/tree/408b90e922a2a9c7bae2ad95433aae97d1a58494), and [PaiNN](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_painn/tree/e7980a52af4936addc5fb03dbc50d4fc74fe98fc), which are included as submodules in this repo. If there are any changes in their corresponding GitHub repos, the following command will update the submodules in this repo:
-```
+
+Our codes are built upon previous implementations of 
+
+- [CGCNN](https://github.com/-mit/PerovskiteOrderingGCNNs_cgcnn/tree/af4c0bf6606da1b46887ed8c29521d199d5e2798)
+- [e3nn](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_e3nn/tree/408b90e922a2a9c7bae2ad95433aae97d1a58494)
+- [PaiNN](https://github.com/learningmatter-mit/PerovskiteOrderingGCNNs_painn/tree/e7980a52af4936addc5fb03dbc50d4fc74fe98fc)
+
+This means repo depends on submodules (basically Git repos nested inside our repo, used for libraries like CGCNN, e3nn, PaiNN). Above three are included as submodules in this repo. 
+
+⸻
+
+1. Check whether submodules are already initialized
+
+Run:
+
+git submodule status
+
+	•	If you see commit hashes next to paths → they’re initialized. So your repo has the submodules properly cloned and ready to use.
+	•	If you see a - before them → they’re not initialized yet.
+
+⸻
+
+2. If not initialized, run:
+
+git submodule update --init --recursive
+
+This downloads all the code from the submodule repos at the versions pinned in your project.
+
+⸻
+
+3. To sync with the latest upstream changes (what the README suggests), run:
+
 git submodule update --remote --merge
-```
+
+This will pull the newest commits from the submodule repos (instead of just the pinned ones).
+
+⚠️ Careful: pulling remote changes could break compatibility if the upstream repos changed a lot. Usually you only do this if your PI or the repo owner told you to update. If not, --init --recursive is enough.
+
+⸻
+
+
+
+
+
+
 
 ---
 
