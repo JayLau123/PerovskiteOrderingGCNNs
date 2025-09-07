@@ -109,7 +109,7 @@ PID   Type   Process name   GPU Memory Usage
 - If memory is tight, you may need to wait for other jobs to finish, or kill idle Python processes (**careful, don’t kill other people’s jobs**).
 
 
-4. What this means for your notebook
+#### 4. What this means for your notebook
 
 - When you set gpu_num = 0 in your notebook, it will use this RTX 4090.
 - Training should be fast since the GPU is high-end, but watch VRAM usage if you increase batch sizes.
