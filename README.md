@@ -232,7 +232,18 @@ Once activated, your terminal prompt should change to show the **environment nam
 
 
 
-Note: Meanwhile, you can connect the VS Code to workstation (boltzmann)：
+#### Note: Meanwhile, you can connect the VS Code to workstation (boltzmann)：
+
+
+in iTerm, your shell will be using the same Python environment, with all the packages from Perovskite_ML_Environment available.
+
+The only difference is where you run your notebooks or scripts:
+- If you run Jupyter notebooks in VS Code, make sure VS Code is using this active environment as the kernel.
+- If you run Python scripts or jupyter notebook in iTerm, it will use the same environment too.
+
+So essentially, activating the environment anywhere gives you access to the same packages, just make sure the terminal or editor you’re using has it activated.
+
+
 
 <img width="1442" height="875" alt="Screenshot 2025-09-07 at 3 52 55 PM" src="https://github.com/user-attachments/assets/85ef29ac-bb03-4025-9593-3c7c0a0aa4f7" />
 
@@ -264,16 +275,21 @@ Since you’re working on the remote workstation (boltzmann), you shouold also i
 <img width="825" height="262" alt="Screenshot 2025-09-07 at 5 19 28 PM" src="https://github.com/user-attachments/assets/b36e1ada-91f0-4d1e-8ac4-a697b45546c6" />
 <img width="835" height="225" alt="Screenshot 2025-09-07 at 5 19 44 PM" src="https://github.com/user-attachments/assets/67f0c8a6-c29b-442f-84db-6638d19c0a3a" />
 
+If you have already installed `Python` and `Jupyter Notebook` in VS Code that connected to `boltzmann`, then click **Selecte Kernel** on the right top corner of VS Code:
 
+<img width="908" height="344" alt="Screenshot 2025-09-07 at 5 26 28 PM" src="https://github.com/user-attachments/assets/f4c46d87-4e67-48d2-b6dd-592a9e238762" />
 
+that means VS Code now detects your Conda environments on boltzmann.
 
-in iTerm, your shell will be using the same Python environment, with all the packages from Perovskite_ML_Environment available.
+Since you want to run the repo in the environment you just created, you should select:
 
-The only difference is where you run your notebooks or scripts:
-- If you run Jupyter notebooks in VS Code, make sure VS Code is using this active environment as the kernel.
-- If you run Python scripts or jupyter notebook in iTerm, it will use the same environment too.
+`Perovskite_ML_Environment (Python 3.10.11) /data2/users/chuanyul/.conda/envs/Perovskite_ML_Environment/bin/python`
 
-So essentially, activating the environment anywhere gives you access to the same packages, just make sure the terminal or editor you’re using has it activated.
+That way:
+
+- Any Jupyter notebook (.ipynb) you open in VS Code will use the correct Python environment.
+- All the dependencies listed in your environment.yml will be available.
+
 
 
 
