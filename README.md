@@ -176,10 +176,37 @@ On many shared HPC/workstations, each user may need their own miniconda/anaconda
 
 `/home/jypeng/miniconda3/envs/Perovskite_ML_Environment` path because that belongs to your advisor’s account.
 
+<img width="1146" height="653" alt="Screenshot 2025-09-07 at 4 33 00 PM" src="https://github.com/user-attachments/assets/61a5bd3a-962e-4a04-8b9a-49e79685a39e" />
+
+Next, open your terminal (VS Code or iTerm), run:
+
+```
+use conda
+```
+
+**In iTerm:**
+
+<img width="420" height="130" alt="Screenshot 2025-09-07 at 4 38 41 PM" src="https://github.com/user-attachments/assets/2b19f924-3133-4857-a874-2ed3ad4ddf05" />
+
+**In VS Code terminal:**
+
+<img width="521" height="90" alt="Screenshot 2025-09-07 at 4 39 57 PM" src="https://github.com/user-attachments/assets/9accebc3-8d76-4d04-98cd-0d8bae50504d" />
+
+**Note: first-time setup for Redirect Conda storage**
+
+Packages and environments don’t fill your home directory.
+
+
+
+
+
+
 
 
 
 After the script finishes in your terminal. Connect the VS Code terminal workstation (boltzmann), the next step is to activate your Conda environment so you can run the notebooks and scripts with all required packages.
+
+activating the environment in your iTerm terminal has the same effect as in VS Code. Once you run:
 
 <img width="1442" height="875" alt="Screenshot 2025-09-07 at 3 52 55 PM" src="https://github.com/user-attachments/assets/85ef29ac-bb03-4025-9593-3c7c0a0aa4f7" />
 
