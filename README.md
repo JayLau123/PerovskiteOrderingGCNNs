@@ -124,7 +124,7 @@ pip install <package_name>
 ```
 
 
-#### Step 1: Run the setup script
+### Step 1: Run the setup script
 
 To automatically download all required data and models and set up the conda environment, run:
 ```
@@ -169,9 +169,17 @@ Here’s a quick summary of what you have:
 The project is now fully set up—you’re ready to start running the notebooks or scripts.
 
 
-#### Step 2: Verify Conda Environment
 
-After the script finishes, activate the conda environment:
+### Step 2: Verify Conda Environment
+
+
+
+After the script finishes in your terminal. Connect the VS Code terminal workstation (boltzmann), the next step is to activate your Conda environment so you can run the notebooks and scripts with all required packages.
+
+<img width="1442" height="875" alt="Screenshot 2025-09-07 at 3 52 55 PM" src="https://github.com/user-attachments/assets/85ef29ac-bb03-4025-9593-3c7c0a0aa4f7" />
+
+
+activate the conda environment:
 
 ```
 conda activate Perovskite_ML_Environment
