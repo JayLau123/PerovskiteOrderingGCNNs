@@ -70,11 +70,52 @@ This will pull the newest commits from the submodule repos (instead of just the 
 ### 🖥️ If working on a Linux workstation
 
 - Make sure your VS Code terminal is running inside the workstation (not your Mac local).
-- If using GPU, verify the GPU is available:
+- If using **GPU**, verify the GPU is available:
 
 ```
 nvidia-smi
 ```
+
+In our group, we use the `Boltzmann` in-house workstation:
+
+<img width="941" height="462" alt="Screenshot 2025-09-07 at 3 31 10 PM" src="https://github.com/user-attachments/assets/c18fc30b-c043-4409-b798-525b5231347b" />
+
+
+#### 1. GPU details
+
+GPU  Name                 Memory-Usage      GPU-Util
+0    NVIDIA GeForce RTX 4090   10670MiB / 24564MiB   94%
+
+- You have one GPU: RTX 4090 with 24 GB of VRAM.
+- Currently, ~10.7 GB of VRAM is used, so roughly 14 GB free.
+- GPU utilization is at 94%, meaning something is actively using it (probably a Python process training or evaluating a model).
+
+
+#### 2. Driver and CUDA
+
+Driver Version: 550.163.01
+CUDA Version: 12.4
+
+- Driver version supports CUDA 12.4.
+- Your PyTorch or other ML frameworks should be compatible with CUDA 11–12. Make sure your conda environment matches (from your environment.yml, it uses CUDA 11.7). Usually, minor version differences are fine.
+
+#### 3. Processes
+
+PID   Type   Process name   GPU Memory Usage
+47398  C      python         10658MiB
+
+- A Python process is occupying ~10.7 GB VRAM.
+- If you want to run your own GCNN training, make sure there’s enough free memory.
+- If memory is tight, you may need to wait for other jobs to finish, or kill idle Python processes (**careful, don’t kill other people’s jobs**).
+
+
+4. What this means for your notebook
+
+- When you set gpu_num = 0 in your notebook, it will use this RTX 4090.
+- Training should be fast since the GPU is high-end, but watch VRAM usage if you increase batch sizes.
+- If GPU-Util is already high, your job might run slower or fail to allocate memory until other processes free it.
+
+---
 
 - If any module is missing, you may need to:
 ```
