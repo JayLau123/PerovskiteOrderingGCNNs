@@ -107,7 +107,7 @@ Check the files downloaded in the directory:
 
 Here’s a quick summary of what you have:
 
-data/ → contains all the JSON datasets needed for training, validation, and testing:
+`data/` → contains all the JSON datasets needed for training, validation, and testing:
 - edge_dataset.json
 - holdout_set_series.json
 - training_set.json
@@ -115,12 +115,12 @@ data/ → contains all the JSON datasets needed for training, validation, and te
 - test_set.json
 - validation_set.json
 
-saved_models/ → contains pretrained models for each architecture:
+`saved_models/` → contains pretrained models for each architecture:
 - CGCNN
 - Painn
 - e3nn
 
-best_models/ → contains the best-performing model checkpoints for each architecture:
+`best_models/` → contains the best-performing model checkpoints for each architecture:
 - CGCNN
 - Painn
 - e3nn
