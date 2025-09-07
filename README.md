@@ -194,22 +194,56 @@ use conda
 
 **Note: first-time setup for Redirect Conda storage**
 
-Packages and environments don’t fill your home directory.
+To make packages and environments don’t fill your home directory, you should run: (You can run those commands from anywhere, it doesn’t depend on the current directory. Conda stores this configuration globally for your user)
+
+```
+chuanyul@boltzmann:~$ conda config --add pkgs_dirs /data2/users/chuanyul/.conda/pkgs
+chuanyul@boltzmann:~$ conda config --add envs_dirs /data2/users/chuanyul/.conda/envs
+```
+
+After that, any new environment or package you install will go to `/data2/users/chuanyul/.conda/`.
+
+#### Create the environment in your data2 folder
+
+in `iTerm` terminal, run:
+
+```
+conda env create -f /data2/users/chuanyul/PerovskiteOrderingGCNNs/environment.yml -p /data2/users/chuanyul/.conda/envs/Perovskite_ML_Environment
+```
+
+- -f points to the environment.yml file in your repo.
+- -p specifies the exact path where the environment will be created.
 
 
 
-
-
-
-
-
-
-After the script finishes in your terminal. Connect the VS Code terminal workstation (boltzmann), the next step is to activate your Conda environment so you can run the notebooks and scripts with all required packages.
-
-activating the environment in your iTerm terminal has the same effect as in VS Code. Once you run:
+Note: Meanwhile, you can connect the VS Code to workstation (boltzmann)：
 
 <img width="1442" height="875" alt="Screenshot 2025-09-07 at 3 52 55 PM" src="https://github.com/user-attachments/assets/85ef29ac-bb03-4025-9593-3c7c0a0aa4f7" />
 
+
+
+the next step is to activate your Conda environment so you can run the notebooks and scripts with all required packages.
+
+activating the environment in your **iTerm** terminal has the same effect as in **VS Code**. 
+
+Once you run:
+
+```
+conda activate /home/jypeng/miniconda3/envs/Perovskite_ML_Environment
+```
+
+in iTerm, your shell will be using the same Python environment, with all the packages from Perovskite_ML_Environment available.
+
+The only difference is where you run your notebooks or scripts:
+- If you run Jupyter notebooks in VS Code, make sure VS Code is using this active environment as the kernel.
+- If you run Python scripts or jupyter notebook in iTerm, it will use the same environment too.
+
+So essentially, activating the environment anywhere gives you access to the same packages, just make sure the terminal or editor you’re using has it activated.
+
+
+
+
+Once you run:
 
 activate the conda environment:
 
