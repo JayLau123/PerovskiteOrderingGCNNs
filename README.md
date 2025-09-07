@@ -291,17 +291,6 @@ That way:
 - All the dependencies listed in your environment.yml will be available.
 
 
-
-
-
-Once you run:
-
-activate the conda environment:
-
-```
-conda activate Perovskite_ML_Environment
-```
-
 Check Python and installed packages:
 
 ```
@@ -309,8 +298,21 @@ python --version
 conda list
 ```
 
+**iTerm terminal**
+
+<img width="995" height="535" alt="Screenshot 2025-09-07 at 5 32 39 PM" src="https://github.com/user-attachments/assets/82588112-3f2f-4248-a379-602ad35b2a83" />
+<img width="869" height="166" alt="Screenshot 2025-09-07 at 5 34 53 PM" src="https://github.com/user-attachments/assets/457fb932-7bf3-4f9c-94ec-1d585525774e" />
+
+**VS Code terminal**
+
+<img width="645" height="299" alt="Screenshot 2025-09-07 at 5 33 01 PM" src="https://github.com/user-attachments/assets/c9bea154-69c1-43c7-bb69-0526fffab1df" />
+
+
 - Ensure wandb, pytorch, pymatgen, and e3nn are installed.
 - Your GPU-related packages (like pytorch-cuda) should match your workstation GPU setup.
+
+---
+
 
 ### Step 3: Test wandb login
 
