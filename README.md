@@ -205,7 +205,7 @@ After that, any new environment or package you install will go to `/data2/users/
 
 #### Create the environment in your data2 folder
 
-in `iTerm` terminal, run:
+in `iTerm` terminal or VS Code terminal, run:
 
 ```
 conda env create -f /data2/users/chuanyul/PerovskiteOrderingGCNNs/environment.yml -p /data2/users/chuanyul/.conda/envs/Perovskite_ML_Environment
@@ -214,23 +214,58 @@ conda env create -f /data2/users/chuanyul/PerovskiteOrderingGCNNs/environment.ym
 - -f points to the environment.yml file in your repo.
 - -p specifies the exact path where the environment will be created.
 
+Then it shows the environment is now successfully created in `/data2/users/chuanyul/.conda/envs/Perovskite_ML_Environment`:
+
+<img width="880" height="247" alt="Screenshot 2025-09-07 at 5 03 18 PM" src="https://github.com/user-attachments/assets/67d3779b-f15e-414d-9b54-7106ac77143f" />
+
+Now you can activate it with:
+
+```
+conda activate /data2/users/chuanyul/.conda/envs/Perovskite_ML_Environment
+```
+
+Once activated, your terminal prompt should change to show the **environment name**, and any Python packages you install or use will stay inside this environment without affecting other users or environments. 
+
+**After that, you can open your Jupyter notebooks in VS Code or run scripts directly, and it will use this environment.**
+
+<img width="983" height="57" alt="Screenshot 2025-09-07 at 5 04 36 PM" src="https://github.com/user-attachments/assets/9478f5bf-c4f6-4cca-a36d-46e7bbf1837d" />
+
 
 
 Note: Meanwhile, you can connect the VS Code to workstation (boltzmann)：
 
 <img width="1442" height="875" alt="Screenshot 2025-09-07 at 3 52 55 PM" src="https://github.com/user-attachments/assets/85ef29ac-bb03-4025-9593-3c7c0a0aa4f7" />
 
+The next step is to activate your Conda environment so you can run the notebooks and scripts with all required packages.
 
-
-the next step is to activate your Conda environment so you can run the notebooks and scripts with all required packages.
-
-activating the environment in your **iTerm** terminal has the same effect as in **VS Code**. 
 
 Once you run:
 
 ```
-conda activate /home/jypeng/miniconda3/envs/Perovskite_ML_Environment
+conda activate /data2/users/chuanyul/.conda/envs/Perovskite_ML_Environment
 ```
+
+Confirm it’s active:
+
+```
+which python
+```
+
+It should point to something like:
+
+`/data2/users/chuanyul/.conda/envs/Perovskite_ML_Environment/bin/python`
+
+Once active, you can run your notebooks in VS Code, and they will use the correct environment with all the packages installed.
+
+Note: When you’re connected via VS Code Remote-SSH, everything you install (Python, Jupyter, packages, etc.) happens on the workstation (boltzmann), not on your Mac.
+
+Since you’re working on the remote workstation (boltzmann), you shouold also install `Python` and `Jupyter Notebook` extensions in the workstation, **VS Code** is just a **window into boltzmann. It shows you files, terminals, and Jupyter notebooks, but doesn’t store data or install packages locally.** So when you clicked Install Python + Jupyter in VS Code, you actually told VS Code to install those extensions into **boltzmann’s VS Code server**.
+
+<img width="825" height="262" alt="Screenshot 2025-09-07 at 5 19 28 PM" src="https://github.com/user-attachments/assets/b36e1ada-91f0-4d1e-8ac4-a697b45546c6" />
+<img width="835" height="225" alt="Screenshot 2025-09-07 at 5 19 44 PM" src="https://github.com/user-attachments/assets/67f0c8a6-c29b-442f-84db-6638d19c0a3a" />
+
+
+
 
 in iTerm, your shell will be using the same Python environment, with all the packages from Perovskite_ML_Environment available.
 
@@ -261,7 +296,7 @@ conda list
 - Ensure wandb, pytorch, pymatgen, and e3nn are installed.
 - Your GPU-related packages (like pytorch-cuda) should match your workstation GPU setup.
 
-#### Step 3: Test wandb login
+### Step 3: Test wandb login
 
 Since the first notebook uses wandb, test that it works:
 
@@ -273,7 +308,7 @@ wandb.login()
 - This should prompt you to authenticate with your account.
 - You only need to log in once per environment session.
 
-#### Step 4: Run the First Notebook in VS Code
+### Step 4: Run the First Notebook in VS Code
 
 1. In VS Code, navigate to:
 ```
@@ -377,7 +412,12 @@ Afterwards, you can run the following three notebooks to reproduce the main resu
 - [`2_model_inference.ipynb`](2_model_inference.ipynb): Verify performance, select top models, compute predictions, and extract latent embeddings.
 - [`3_model_analysis.ipynb`](3_model_analysis.ipynb): Reproduce all major figures in the manuscript.
 
+
+
+
 ---
+
+
 
 ### 🖥️ If working on an HPC cluster
 
