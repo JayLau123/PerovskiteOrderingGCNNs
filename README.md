@@ -172,6 +172,11 @@ The project is now fully set up—you’re ready to start running the notebooks 
 
 ### Step 2: Verify Conda Environment
 
+On many shared HPC/workstations, each user may need their own miniconda/anaconda installation in their home directory if the admins haven’t provided a centrally installed one. You cannot use the 
+
+`/home/jypeng/miniconda3/envs/Perovskite_ML_Environment` path because that belongs to your advisor’s account.
+
+
 
 
 After the script finishes in your terminal. Connect the VS Code terminal workstation (boltzmann), the next step is to activate your Conda environment so you can run the notebooks and scripts with all required packages.
