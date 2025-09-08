@@ -323,6 +323,9 @@ import wandb
 wandb.login()
 ```
 
+It may prompt a URL to authenticate. Follow the link, copy the code, and paste it back into the notebook cell.
+
+
 - This should prompt you to authenticate with your account.
 - You only need to log in once per environment session.
 
@@ -348,16 +351,7 @@ Perovskite_ML_Environment
 	- Use Shift + Enter to execute each cell sequentially.
 	- This is exactly like running in a browser-based Jupyter Notebook.
  
-5. Check WandB Login
 
-If you run:
-
-```
-import wandb
-wandb.login()
-```
-
-It may prompt a URL to authenticate. Follow the link, copy the code, and paste it back into the notebook cell.
 
 5. Set Parameters for Training
  
