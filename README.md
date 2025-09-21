@@ -9,6 +9,8 @@ Repo for our paper **"Learning Ordering in Crystalline Materials with Symmetry-A
 
 ## 📥 Download
 
+# self-learn-check-1
+
 To start, clone this repo and all its submodules to your local directory or a workstation:
 ```
 git clone --recurse-submodules git@github.com:jiayu-peng-lab/PerovskiteOrderingGCNNs.git
