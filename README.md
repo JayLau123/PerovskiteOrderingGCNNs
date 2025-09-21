@@ -10,6 +10,8 @@ Repo for our paper **"Learning Ordering in Crystalline Materials with Symmetry-A
 ## 📥 Download
 
 # self-learn-check-1
+# self-learn-check-2
+
 
 To start, clone this repo and all its submodules to your local directory or a workstation:
 ```
